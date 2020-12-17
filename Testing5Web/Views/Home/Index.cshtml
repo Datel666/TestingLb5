@@ -1,0 +1,93 @@
+﻿@model TestingLb1.GoodsStore
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h4 class="display-3">Магазин</h4>
+    <h3>Товары: <span id="count">@Model.Count</span></h3>
+    <table id="products" class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+            <tr>
+                <td>@product.name</td>
+                <td>@product.count</td>
+                <td>@product.price</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div class="container bg-light">
+        <div class="row m-3">
+            <div class="col-sm">
+                <h4>Операции</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm m-1">
+                <h5>Добавить новый товар</h5>
+                <form asp-controller="Home" asp-action="AddProduct" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="addName">Имя</label>
+                        <input name="addName" class="form-control" id="addName" placeholder="Введите название">
+                    </div>
+                    <div class="form-group row">
+                        <label for="addCount">Количество</label>
+                        <input name="addCount" class="form-control" id="addCount" placeholder="Введите количество">
+                    </div>
+                    <div class="form-group row">
+                        <label for="addPrice">Цена</label>
+                        <input name="addPrice" class="form-control" id="addPrice" placeholder="Введите цену">
+                    </div>
+                    <button id="btnAddIfNotExists" type="submit" class="btn btn-primary float-right">Добавить</button>
+                </form>
+            </div>
+            <div class="col-sm m-1">
+                <h5>Удалить товар</h5>
+                <form asp-controller="Home" asp-action="RemoveProduct" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="removeName">Имя</label>
+                        <input name="removeName" class="form-control" id="removeName" placeholder="Введите имя">
+                    </div>
+                    <button id="btnRemoveAllNames" type="submit" class="btn btn-primary float-right">Удалить</button>
+                </form>
+            </div>
+            <div class="col-sm m-1">
+                <h5>Импорт товара</h5>
+                <form asp-controller="Home" asp-action="ImportProduct" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="importName">Название товара</label>
+                        <input name="importName" class="form-control" id="importName" placeholder="Введите название товара">
+                    </div>
+                    <div class="form-group row">
+                        <label for="importCount">Количество товара</label>
+                        <input name="importCount" class="form-control" id="importCount" placeholder="Введите количество товара">
+                    </div>
+                    <button id="btnImport" type="submit" class="btn btn-primary float-right">Импорт</button>
+                </form>
+            </div>
+            <div class="col-sm m-1">
+                <h5>Купить товар</h5>
+                <form asp-controller="Home" asp-action="BuyProduct" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="buyName">Название товара</label>
+                        <input name="buyName" class="form-control" id="buyName" placeholder="Введите название товара">
+                    </div>
+                    <div class="form-group row">
+                        <label for="buyCount">Количество товара</label>
+                        <input name="buyCount" class="form-control" id="buyCount" placeholder="Введите количество товара">
+                    </div>
+                    <button id="btnBuy" type="submit" class="btn btn-primary float-right">Купить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
