@@ -1,4 +1,4 @@
-﻿@model TestingLb1.GoodsStore
+@model TestingLb1.GoodsStore
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -37,11 +37,11 @@
                 <form asp-controller="Home" asp-action="AddProduct" method="post" autocomplete="off">
                     <div class="form-group row">
                         <label for="addName">Имя</label>
-                        <input name="addName" class="form-control" id="addName" placeholder="Введите название">
+                        <input name="addName" class="form-control" id="addName" placeholder="Введите название товара">
                     </div>
                     <div class="form-group row">
                         <label for="addCount">Количество</label>
-                        <input name="addCount" class="form-control" id="addCount" placeholder="Введите количество">
+                        <input name="addCount" class="form-control" id="addCount" placeholder="Введите количество товара">
                     </div>
                     <div class="form-group row">
                         <label for="addPrice">Цена</label>
@@ -54,8 +54,8 @@
                 <h5>Удалить товар</h5>
                 <form asp-controller="Home" asp-action="RemoveProduct" method="post" autocomplete="off">
                     <div class="form-group row">
-                        <label for="removeName">Имя</label>
-                        <input name="removeName" class="form-control" id="removeName" placeholder="Введите имя">
+                        <label for="removeName">Название товара</label>
+                        <input name="removeName" class="form-control" id="removeName" placeholder="Введите название товара">
                     </div>
                     <button id="btnRemoveAllNames" type="submit" class="btn btn-primary float-right">Удалить</button>
                 </form>
@@ -87,6 +87,12 @@
                     </div>
                     <button id="btnBuy" type="submit" class="btn btn-primary float-right">Купить</button>
                 </form>
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col-sm">
+                <label for="errorField">Консоль</label>
+                <input name="errorField" readonly class="form-control" id="errorField" placeholder=@Model.errorText>
             </div>
         </div>
     </div>
