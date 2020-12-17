@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +6,8 @@ namespace TestingLb1
 {
     public class GoodsStore
     {
-
         private List<Product> _products;
-
+        public string errorText;
 
         public IReadOnlyCollection<Product> Products => _products;
 
@@ -17,69 +16,99 @@ namespace TestingLb1
             _products = new List<Product>();
         }
 
-
         public int Count => _products.Count;
-
-        
-
 
         public void AddNewProduct(Product product)
         {
-            if(int.TryParse(product.count,out int n) && int.TryParse(product.price,out int nn))
+            if (!(product.name == null))
             {
-                if(!_products.Contains(product))
+                if (!_products.Exists(a => a.name == product.name))
                 {
-                    _products.Add(product);
+                    if (uint.TryParse(product.count, out uint n) && uint.TryParse(product.price, out uint nn) && !(product.count == null) && !(product.price == null))
+                    {
+                        _products.Add(product);
+                        errorText = "";
+                    }
+                    else
+                    {
+                        errorText = "Count_and_Price_is_Negative_or_NotNumber";
+                    }
                 }
                 else
                 {
-                    throw new Exception("Item already exist");
+                    errorText = "Item_already_exist";
                 }
             }
             else
             {
-                throw new Exception("Wrong inputs");
+                errorText = "ItemName_IsNull";
             }
-            
+
         }
 
         public void ImportProduct(string name, string count)
         {
-            if(int.TryParse(count, out int nn))
+            if (!(name == null))
             {
-                try
+                int id = _products.FindIndex(a => a.name == name);
+                if (id >= 0)
                 {
-                    int id = _products.FindIndex(a => a.name == name);
-                    _products[id].count = (Convert.ToInt32(_products[id].count) + Convert.ToInt32(count)).ToString();
+                    if (uint.TryParse(count, out uint nn) && !(count == null))
+                    {
+                        _products[id].count = (Convert.ToInt32(_products[id].count) + Convert.ToInt32(count)).ToString();
+                        errorText = "";
+                    }
+
+                    else
+                    {
+                        errorText = "Wrong_count";
+                    }
+
                 }
-                catch
+                else
                 {
-                    throw new Exception("Item not found");
+                    errorText = "Item_not_found";
                 }
             }
             else
             {
-                throw new Exception("Wrong inputs");
+                errorText = "ItemName_IsNull";
             }
+
         }
 
         public void BuyProduct(string name, string count)
         {
-            if (int.TryParse(count, out int nn))
+            if (!(name == null))
             {
-                try
+                int id = _products.FindIndex(a => a.name == name);
+                if (id >= 0)
                 {
-                    int id = _products.FindIndex(a => a.name == name);
-                    _products[id].count = (Convert.ToInt32(_products[id].count) - Convert.ToInt32(count)).ToString();
+                    if (uint.TryParse(count, out uint nn) && !(count == null))
+                    {
+                        if (Convert.ToInt32(_products[id].count) >= Convert.ToInt32(count))
+                        {
+                            _products[id].count = (Convert.ToInt32(_products[id].count) - Convert.ToInt32(count)).ToString();
+                            errorText = "";
+                        }
+                        else
+                        {
+                            errorText = "Item_buy_query_count_more_than_exist";
+                        }
+                    }
+                    else
+                    {
+                        errorText = "Wrong_count";
+                    }
                 }
-                catch
+                else
                 {
-                    throw new Exception("Item not found");
+                    errorText = "Item_not_found";
                 }
             }
             else
             {
-                throw new Exception("Wrong inputs");
+                errorText = "ItemName_IsNull";
             }
         }
 
@@ -95,21 +124,28 @@ namespace TestingLb1
 
         public void RemoveAllWithName(string name)
         {
-            var count = _products.FindAll(a => a.name == name).Count;
-            if (count > 0)
+            if (!(name == null))
             {
-                foreach (var pr in _products.FindAll(a => a.name == name))
+
+                var count = _products.FindAll(a => a.name == name).Count;
+                if (count > 0)
                 {
-                    _products.Remove(pr);
+                    foreach (var pr in _products.FindAll(a => a.name == name))
+                    {
+                        _products.Remove(pr);
+                        errorText = "";
+                    }
+                }
+                else
+                {
+                    errorText = "Item_not_found";
                 }
             }
             else
             {
-                throw new Exception("Item not found");
+                errorText = "ItemName_IsNull";
             }
         }
-
-
     }
-    
+
 }
