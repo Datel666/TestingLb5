@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,7 +16,5 @@ namespace TestingLb1
             price = _price;
             name = _name;
         }
-
-        
     }
 }
